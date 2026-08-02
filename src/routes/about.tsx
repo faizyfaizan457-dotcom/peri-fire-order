@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { BUSINESS, IMAGES } from "@/config/business";
+import { BUSINESS } from "@/config/business";
 import { IMAGES as MENU_IMAGES } from "@/data/menu";
 
 export const Route = createFileRoute("/about")({
@@ -47,7 +47,6 @@ function About() {
           from the business before publication — nothing here has been invented.
         </p>
       </div>
-      <span className="hidden">{Object.keys(IMAGES ?? {}).length}</span>
     </div>
   );
 }
