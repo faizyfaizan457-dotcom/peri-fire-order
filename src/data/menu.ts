@@ -331,7 +331,7 @@ export const PRODUCTS: Product[] = [
     image: catBurgers,
     modifiers: ["toppings", "sauces"],
     mealUpgrade: 2.5,
-    tags: b.id === "quayside-special" ? ["signature"] : undefined,
+    ...(b.id === "quayside-special" ? { tags: ["signature"] } : {}),
   })),
 
   // Lamb & Veggie
