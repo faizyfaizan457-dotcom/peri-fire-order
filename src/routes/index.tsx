@@ -17,10 +17,10 @@ export const Route = createFileRoute("/")({
         content:
           "Halal peri peri chicken, gourmet burgers, wings, loaded fries and shakes on Southgate Street, Gloucester. Order online for collection or delivery — 10% off online orders.",
       },
-      { property: "og:title", content: "Quayside Peri Peri | Fire Grilled. Full of Flavour." },
+      { property: "og:title", content: "Quayside Peri Peri Gloucester | Halal Fire Grilled Chicken & Burgers" },
       {
         property: "og:description",
-        content: "Fire grilled halal peri peri chicken, burgers and loaded fries in Gloucester GL1. Order online now.",
+        content: "Halal peri peri chicken, gourmet burgers, wings, loaded fries and shakes on Southgate Street, Gloucester. Order online for collection or delivery — 10% off online orders.",
       },
     ],
     scripts: [

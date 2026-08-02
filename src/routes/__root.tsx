@@ -80,17 +80,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Quayside Peri Peri | Halal Peri Peri Chicken & Burgers, Gloucester" },
+      { title: "Quayside Peri Peri Gloucester | Halal Fire Grilled Chicken & Burgers" },
       {
         name: "description",
         content:
-          "Fire grilled halal peri peri chicken, gourmet burgers, wings and loaded fries in Gloucester. Order online for collection or delivery — 10% off online orders.",
+          "Halal peri peri chicken, gourmet burgers, wings, loaded fries and shakes on Southgate Street, Gloucester. Order online for collection or delivery — 10% off online orders.",
       },
       { name: "author", content: "Quayside Peri Peri" },
       { property: "og:site_name", content: "Quayside Peri Peri" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#120a1a" },
+      { property: "og:title", content: "Quayside Peri Peri Gloucester | Halal Fire Grilled Chicken & Burgers" },
+      { name: "twitter:title", content: "Quayside Peri Peri Gloucester | Halal Fire Grilled Chicken & Burgers" },
+      { property: "og:description", content: "Halal peri peri chicken, gourmet burgers, wings, loaded fries and shakes on Southgate Street, Gloucester. Order online for collection or delivery — 10% off online orders." },
+      { name: "twitter:description", content: "Halal peri peri chicken, gourmet burgers, wings, loaded fries and shakes on Southgate Street, Gloucester. Order online for collection or delivery — 10% off online orders." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dc82c834-8405-4b28-bfb9-26b8c483947a/id-preview-b2c86607--165132f7-cbb6-42ad-b9b6-9055c0cc6843.lovable.app-1785698064093.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dc82c834-8405-4b28-bfb9-26b8c483947a/id-preview-b2c86607--165132f7-cbb6-42ad-b9b6-9055c0cc6843.lovable.app-1785698064093.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
