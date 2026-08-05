@@ -250,6 +250,51 @@ export type Database = {
         }
         Relationships: []
       }
+      loyalty_points: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          order_id: string | null
+          points: number
+          profile_id: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          order_id?: string | null
+          points?: number
+          profile_id: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          order_id?: string | null
+          points?: number
+          profile_id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loyalty_points_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "loyalty_points_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       modifier_groups: {
         Row: {
           created_at: string
@@ -320,6 +365,215 @@ export type Database = {
             columns: ["modifier_group_id"]
             isOneToOne: false
             referencedRelation: "modifier_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_item_modifiers: {
+        Row: {
+          created_at: string
+          id: string
+          modifier_group_name: string
+          modifier_name: string
+          order_item_id: string
+          price: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          modifier_group_name: string
+          modifier_name: string
+          order_item_id: string
+          price?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          modifier_group_name?: string
+          modifier_name?: string
+          order_item_id?: string
+          price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_item_modifiers_order_item_id_fkey"
+            columns: ["order_item_id"]
+            isOneToOne: false
+            referencedRelation: "order_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          base_price: number
+          created_at: string
+          id: string
+          line_total: number
+          meal_upgrade: boolean
+          meal_upgrade_price: number
+          notes: string | null
+          order_id: string
+          product_id: string | null
+          product_name: string
+          product_size_label: string | null
+          quantity: number
+        }
+        Insert: {
+          base_price: number
+          created_at?: string
+          id?: string
+          line_total?: number
+          meal_upgrade?: boolean
+          meal_upgrade_price?: number
+          notes?: string | null
+          order_id: string
+          product_id?: string | null
+          product_name: string
+          product_size_label?: string | null
+          quantity?: number
+        }
+        Update: {
+          base_price?: number
+          created_at?: string
+          id?: string
+          line_total?: number
+          meal_upgrade?: boolean
+          meal_upgrade_price?: number
+          notes?: string | null
+          order_id?: string
+          product_id?: string | null
+          product_name?: string
+          product_size_label?: string | null
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          order_id: string
+          status: Database["public"]["Enums"]["order_status"]
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_id: string
+          status: Database["public"]["Enums"]["order_status"]
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_id?: string
+          status?: Database["public"]["Enums"]["order_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_status_history_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          customer_email: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          delivery_address_id: string | null
+          delivery_address_json: Json | null
+          delivery_fee: number
+          discount_amount: number
+          id: string
+          notes: string | null
+          payment_intent_id: string | null
+          payment_provider: string | null
+          payment_status: Database["public"]["Enums"]["payment_status"]
+          scheduled_at: string | null
+          source: string
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          tax_amount: number
+          tip_amount: number
+          total: number
+          type: Database["public"]["Enums"]["order_type"]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          delivery_address_id?: string | null
+          delivery_address_json?: Json | null
+          delivery_fee?: number
+          discount_amount?: number
+          id?: string
+          notes?: string | null
+          payment_intent_id?: string | null
+          payment_provider?: string | null
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          scheduled_at?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          tax_amount?: number
+          tip_amount?: number
+          total?: number
+          type: Database["public"]["Enums"]["order_type"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          delivery_address_id?: string | null
+          delivery_address_json?: Json | null
+          delivery_fee?: number
+          discount_amount?: number
+          id?: string
+          notes?: string | null
+          payment_intent_id?: string | null
+          payment_provider?: string | null
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          scheduled_at?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          tax_amount?: number
+          tip_amount?: number
+          total?: number
+          type?: Database["public"]["Enums"]["order_type"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_delivery_address_id_fkey"
+            columns: ["delivery_address_id"]
+            isOneToOne: false
+            referencedRelation: "addresses"
             referencedColumns: ["id"]
           },
         ]
@@ -517,6 +771,41 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          order_id: string
+          rating: number
+          user_id: string | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          order_id: string
+          rating: number
+          user_id?: string | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          order_id?: string
+          rating?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -547,6 +836,17 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "staff"
+      order_status:
+        | "new"
+        | "confirmed"
+        | "preparing"
+        | "ready"
+        | "out_for_delivery"
+        | "completed"
+        | "cancelled"
+        | "refunded"
+      order_type: "collection" | "delivery"
+      payment_status: "pending" | "paid" | "failed" | "refunded"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -675,6 +975,18 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "staff"],
+      order_status: [
+        "new",
+        "confirmed",
+        "preparing",
+        "ready",
+        "out_for_delivery",
+        "completed",
+        "cancelled",
+        "refunded",
+      ],
+      order_type: ["collection", "delivery"],
+      payment_status: ["pending", "paid", "failed", "refunded"],
     },
   },
 } as const
