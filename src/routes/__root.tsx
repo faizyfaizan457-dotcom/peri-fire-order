@@ -13,7 +13,9 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { CartSheet, MobileOrderBar } from "@/components/site/CartSheet";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
+
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -128,17 +130,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <Header />
-        <main id="main">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <Footer />
-        <CartSheet />
-        <MobileOrderBar />
-        <Toaster />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Header />
+          <main id="main">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <Footer />
+          <CartSheet />
+          <MobileOrderBar />
+          <Toaster />
+        </CartProvider>
+      </AuthProvider>
     </QueryClientProvider>
+
   );
 }

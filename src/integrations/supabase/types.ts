@@ -832,7 +832,28 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_bootstrap_open: { Args: never; Returns: boolean }
+      claim_first_admin: {
+        Args: never
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      log_audit: {
+        Args: {
+          _action: string
+          _new_data?: Json
+          _old_data?: Json
+          _record_id: string
+          _table_name: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "admin" | "staff"
