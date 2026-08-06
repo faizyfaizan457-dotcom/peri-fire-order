@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ShoppingBag, User, X, Flame } from "lucide-react";
+import { Menu, Search, ShieldCheck, ShoppingBag, User, X, Flame } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BUSINESS, formatGBP } from "@/config/business";
 import { searchProducts } from "@/data/menu";
+import { useAuth } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
+
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -21,7 +23,9 @@ const NAV = [
 
 export function Header() {
   const { itemCount, total, setCartOpen } = useCart();
+  const { user, isStaff } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
+
   const [query, setQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const results = searchProducts(query);
@@ -62,11 +66,24 @@ export function Header() {
             <Button variant="ghost" size="icon" aria-label="Search menu" onClick={() => setSearchOpen(true)}>
               <Search className="size-5" />
             </Button>
-            <Button variant="ghost" size="icon" aria-label="Your account" asChild>
-              <Link to="/account">
+            {isStaff && (
+              <Button variant="ghost" size="icon" aria-label="Admin dashboard" asChild>
+                <Link to="/admin">
+                  <ShieldCheck className="size-5 text-gold" />
+                </Link>
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={user ? "Your account" : "Sign in"}
+              asChild
+            >
+              <Link to={user ? "/account" : "/auth"}>
                 <User className="size-5" />
               </Link>
             </Button>
+
             <Button
               variant="secondary"
               className="relative gap-2 rounded-full font-semibold"
