@@ -8,12 +8,12 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
-  FEATURE_AREAS,
   listRolePermissions,
   resetRolePermissions,
   setRolePermission,
-  type FeatureKey,
 } from "@/lib/admin.functions";
+import { listFeatureAreas } from "@/lib/features.functions";
+import type { FeatureKey } from "@/lib/feature-areas";
 import { useAdminProfile } from "./route";
 
 export const Route = createFileRoute("/_authenticated/admin/permissions")({
