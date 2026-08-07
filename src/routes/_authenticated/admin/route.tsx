@@ -16,6 +16,7 @@ const TABS = [
   { to: "/admin", label: "Overview", exact: true },
   { to: "/admin/staff", label: "Roles & staff", exact: false },
   { to: "/admin/permissions", label: "Permissions", exact: false },
+  { to: "/admin/features", label: "Feature areas", exact: false },
   { to: "/admin/audit", label: "Audit log", exact: false },
 ] as const;
 
