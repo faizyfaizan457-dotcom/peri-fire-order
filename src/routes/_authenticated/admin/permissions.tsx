@@ -51,11 +51,19 @@ function PermissionsPage() {
   const fetchPerms = useServerFn(listRolePermissions);
   const savePerm = useServerFn(setRolePermission);
   const resetPerms = useServerFn(resetRolePermissions);
+  const fetchAreas = useServerFn(listFeatureAreas);
 
   const permsQuery = useQuery({
     queryKey: ["admin", "permissions"],
     queryFn: () => fetchPerms(),
   });
+
+  const areasQuery = useQuery({
+    queryKey: ["admin", "feature-areas"],
+    queryFn: () => fetchAreas(),
+  });
+
+  const featureAreas = (areasQuery.data ?? []).filter((a) => a.active);
 
   const matrix: Matrix = { admin: {}, staff: {} };
   for (const row of permsQuery.data ?? []) {
