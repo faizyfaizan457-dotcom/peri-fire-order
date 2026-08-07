@@ -806,6 +806,36 @@ export type Database = {
           },
         ]
       }
+      role_permissions: {
+        Row: {
+          can_manage: boolean
+          can_view: boolean
+          created_at: string
+          feature: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+        }
+        Insert: {
+          can_manage?: boolean
+          can_view?: boolean
+          created_at?: string
+          feature: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Update: {
+          can_manage?: boolean
+          can_view?: boolean
+          created_at?: string
+          feature?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -836,6 +866,10 @@ export type Database = {
       claim_first_admin: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_permission: {
+        Args: { _feature: string; _manage?: boolean; _user_id: string }
+        Returns: boolean
       }
       has_role: {
         Args: {
