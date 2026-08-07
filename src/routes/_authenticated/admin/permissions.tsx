@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Fragment } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Check, Loader2, RotateCcw, X } from "lucide-react";
@@ -163,22 +164,20 @@ function PermissionsPage() {
               <tr className="border-b border-border">
                 <th scope="col" className="px-5 py-2" />
                 {ROLES.map((r) => (
-                  <>
+                  <Fragment key={r.key}>
                     <th
-                      key={`${r.key}-v`}
                       scope="col"
                       className="border-l border-border px-4 py-2 text-center text-xs font-semibold text-muted-foreground"
                     >
                       View
                     </th>
                     <th
-                      key={`${r.key}-m`}
                       scope="col"
                       className="px-4 py-2 text-center text-xs font-semibold text-muted-foreground"
                     >
                       Manage
                     </th>
-                  </>
+                  </Fragment>
                 ))}
               </tr>
             </thead>
@@ -192,8 +191,8 @@ function PermissionsPage() {
                   {ROLES.map((r) => {
                     const cell = cellFor(r.key, feature.key);
                     return (
-                      <>
-                        <td key={`${r.key}-${feature.key}-v`} className="border-l border-border px-4 py-4 text-center">
+                      <Fragment key={r.key}>
+                        <td className="border-l border-border px-4 py-4 text-center">
                           <PermToggle
                             checked={cell.canView}
                             disabled={!isAdmin || saveMutation.isPending}
@@ -202,7 +201,7 @@ function PermissionsPage() {
                             readOnly={!isAdmin}
                           />
                         </td>
-                        <td key={`${r.key}-${feature.key}-m`} className="px-4 py-4 text-center">
+                        <td className="px-4 py-4 text-center">
                           <PermToggle
                             checked={cell.canManage}
                             disabled={!isAdmin || saveMutation.isPending}
@@ -211,7 +210,7 @@ function PermissionsPage() {
                             readOnly={!isAdmin}
                           />
                         </td>
-                      </>
+                      </Fragment>
                     );
                   })}
                 </tr>
