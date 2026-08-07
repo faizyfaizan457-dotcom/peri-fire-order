@@ -65,7 +65,8 @@ function FeatureAreasPage() {
   const [hint, setHint] = useState("");
 
   const createMutation = useMutation({
-    mutationFn: (vars: { key: string; label: string; hint?: string }) => createArea({ data: vars }),
+    mutationFn: (vars: { key: string; label: string; hint?: string | undefined }) =>
+      createArea({ data: vars }),
     onSuccess: () => {
       toast.success("Feature area added");
       setKey("");
