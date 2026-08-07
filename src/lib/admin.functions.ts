@@ -210,21 +210,12 @@ export const getAdminStats = createServerFn({ method: "GET" })
     };
   });
 
-export const FEATURE_AREAS = [
-  { key: "orders", label: "Orders", hint: "Live order queue, status changes, refunds" },
-  { key: "menu", label: "Menu", hint: "Categories, dishes, sizes and modifiers" },
-  { key: "deals", label: "Deals & codes", hint: "Promotions and discount codes" },
-  { key: "delivery", label: "Delivery", hint: "Postcode zones, fees and minimums" },
-  { key: "customers", label: "Customers", hint: "Customer profiles and history" },
-  { key: "analytics", label: "Analytics", hint: "Revenue, stats and reporting" },
-  { key: "settings", label: "Restaurant settings", hint: "Hours, tax, contact details" },
-  { key: "staff", label: "Roles & staff", hint: "Grant or revoke access" },
-  { key: "audit", label: "Audit log", hint: "Immutable record of admin actions" },
-] as const;
+const featureKeySchema = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .regex(FEATURE_KEY_PATTERN, "Invalid feature key");
 
-export type FeatureKey = (typeof FEATURE_AREAS)[number]["key"];
-
-const featureKeys = FEATURE_AREAS.map((f) => f.key) as [FeatureKey, ...FeatureKey[]];
 
 export const listRolePermissions = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
