@@ -95,11 +95,16 @@ export const updateFeatureArea = createServerFn({ method: "POST" })
     const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
     if (isAdmin !== true) throw new Error("Forbidden: admin role required");
 
-    const patch: Record<string, unknown> = {};
-    if (data.label !== undefined) patch["label"] = data.label;
-    if (data.hint !== undefined) patch["hint"] = data.hint || null;
-    if (data.sortOrder !== undefined) patch["sort_order"] = data.sortOrder;
-    if (data.active !== undefined) patch["active"] = data.active;
+    const patch: {
+      label?: string;
+      hint?: string | null;
+      sort_order?: number;
+      active?: boolean;
+    } = {};
+    if (data.label !== undefined) patch.label = data.label;
+    if (data.hint !== undefined) patch.hint = data.hint || null;
+    if (data.sortOrder !== undefined) patch.sort_order = data.sortOrder;
+    if (data.active !== undefined) patch.active = data.active;
     if (Object.keys(patch).length === 0) return { ok: true as const };
 
     const { error } = await supabase.from("feature_areas").update(patch).eq("id", data.id);
