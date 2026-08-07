@@ -141,13 +141,21 @@ function PermissionsPage() {
         </p>
       )}
 
-      {permsQuery.isLoading ? (
+      {permsQuery.isLoading || areasQuery.isLoading ? (
         <div className="flex items-center gap-2 rounded-3xl border border-border bg-card/60 p-6 text-sm text-muted-foreground">
           <Loader2 className="size-4 animate-spin" aria-hidden /> Loading permissions…
         </div>
-      ) : permsQuery.error ? (
+      ) : permsQuery.error || areasQuery.error ? (
         <p className="rounded-3xl border border-destructive/40 bg-card/60 p-6 text-sm text-destructive">
           {permsQuery.error instanceof Error ? permsQuery.error.message : "Could not load permissions."}
+        </p>
+      ) : featureAreas.length === 0 ? (
+        <p className="rounded-3xl border border-border bg-card/60 p-6 text-sm text-muted-foreground">
+          No active feature areas yet. Add some under{" "}
+          <Link to="/admin/features" className="text-gold underline">
+            Feature areas
+          </Link>
+          .
         </p>
       ) : (
         <div className="overflow-x-auto rounded-3xl border border-border bg-card/60">
