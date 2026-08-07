@@ -182,7 +182,7 @@ function PermissionsPage() {
               </tr>
             </thead>
             <tbody>
-              {FEATURE_AREAS.map((feature) => (
+              {featureAreas.map((feature) => (
                 <tr key={feature.key} className="border-b border-border/60 last:border-0">
                   <th scope="row" className="px-5 py-4 text-left align-middle">
                     <span className="block font-semibold text-foreground">{feature.label}</span>
