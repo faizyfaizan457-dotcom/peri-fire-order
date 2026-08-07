@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { DEFAULT_STAFF_ACCESS, FEATURE_KEY_PATTERN } from "@/lib/feature-areas";
 
 const roleSchema = z.enum(["admin", "staff"]);
 
