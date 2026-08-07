@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { DEFAULT_STAFF_ACCESS, FEATURE_KEY_PATTERN } from "@/lib/feature-areas";
 
 const roleSchema = z.enum(["admin", "staff"]);
 
@@ -210,21 +211,12 @@ export const getAdminStats = createServerFn({ method: "GET" })
     };
   });
 
-export const FEATURE_AREAS = [
-  { key: "orders", label: "Orders", hint: "Live order queue, status changes, refunds" },
-  { key: "menu", label: "Menu", hint: "Categories, dishes, sizes and modifiers" },
-  { key: "deals", label: "Deals & codes", hint: "Promotions and discount codes" },
-  { key: "delivery", label: "Delivery", hint: "Postcode zones, fees and minimums" },
-  { key: "customers", label: "Customers", hint: "Customer profiles and history" },
-  { key: "analytics", label: "Analytics", hint: "Revenue, stats and reporting" },
-  { key: "settings", label: "Restaurant settings", hint: "Hours, tax, contact details" },
-  { key: "staff", label: "Roles & staff", hint: "Grant or revoke access" },
-  { key: "audit", label: "Audit log", hint: "Immutable record of admin actions" },
-] as const;
+const featureKeySchema = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .regex(FEATURE_KEY_PATTERN, "Invalid feature key");
 
-export type FeatureKey = (typeof FEATURE_AREAS)[number]["key"];
-
-const featureKeys = FEATURE_AREAS.map((f) => f.key) as [FeatureKey, ...FeatureKey[]];
 
 export const listRolePermissions = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -255,7 +247,7 @@ export const setRolePermission = createServerFn({ method: "POST" })
     z
       .object({
         role: roleSchema,
-        feature: z.enum(featureKeys),
+        feature: featureKeySchema,
         canView: z.boolean(),
         canManage: z.boolean(),
       })
@@ -267,8 +259,8 @@ export const setRolePermission = createServerFn({ method: "POST" })
     if (isAdmin !== true) throw new Error("Forbidden: admin role required");
 
     // Managing implies viewing; admins must keep full access to role management.
-    const canManage = data.canManage;
-    const canView = canManage ? true : data.canView;
+    const canManage: boolean = data.canManage;
+    const canView: boolean = canManage ? true : data.canView;
     if (data.role === "admin" && data.feature === "staff" && !canManage) {
       throw new Error("Super Admins must keep manage access to Roles & staff.");
     }
@@ -291,28 +283,24 @@ export const resetRolePermissions = createServerFn({ method: "POST" })
     const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
     if (isAdmin !== true) throw new Error("Forbidden: admin role required");
 
-    const defaults: { role: "admin" | "staff"; feature: FeatureKey; view: boolean; manage: boolean }[] = [
-      ...FEATURE_AREAS.map((f) => ({ role: "admin" as const, feature: f.key, view: true, manage: true })),
-      { role: "staff", feature: "orders", view: true, manage: true },
-      { role: "staff", feature: "menu", view: true, manage: false },
-      { role: "staff", feature: "deals", view: true, manage: false },
-      { role: "staff", feature: "delivery", view: true, manage: false },
-      { role: "staff", feature: "customers", view: true, manage: false },
-      { role: "staff", feature: "analytics", view: false, manage: false },
-      { role: "staff", feature: "settings", view: false, manage: false },
-      { role: "staff", feature: "staff", view: false, manage: false },
-      { role: "staff", feature: "audit", view: true, manage: false },
-    ];
+    const { data: areas, error: areasError } = await supabase
+      .from("feature_areas")
+      .select("key");
+    if (areasError) throw new Error(areasError.message);
 
-    const { error } = await supabase.from("role_permissions").upsert(
-      defaults.map((d) => ({
-        role: d.role,
-        feature: d.feature,
-        can_view: d.view,
-        can_manage: d.manage,
-      })),
-      { onConflict: "role,feature" },
-    );
+    const rows = (areas ?? []).flatMap((a) => {
+      const staff = DEFAULT_STAFF_ACCESS[a.key] ?? { view: false, manage: false };
+      return [
+        { role: "admin" as const, feature: a.key, can_view: true, can_manage: true },
+        { role: "staff" as const, feature: a.key, can_view: staff.view, can_manage: staff.manage },
+      ];
+    });
+
+    if (rows.length === 0) return { ok: true as const };
+
+    const { error } = await supabase
+      .from("role_permissions")
+      .upsert(rows, { onConflict: "role,feature" });
     if (error) throw new Error(error.message);
 
     return { ok: true as const };

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Fragment } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -8,12 +8,12 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
-  FEATURE_AREAS,
   listRolePermissions,
   resetRolePermissions,
   setRolePermission,
-  type FeatureKey,
 } from "@/lib/admin.functions";
+import { listFeatureAreas } from "@/lib/features.functions";
+import type { FeatureKey } from "@/lib/feature-areas";
 import { useAdminProfile } from "./route";
 
 export const Route = createFileRoute("/_authenticated/admin/permissions")({
@@ -51,11 +51,19 @@ function PermissionsPage() {
   const fetchPerms = useServerFn(listRolePermissions);
   const savePerm = useServerFn(setRolePermission);
   const resetPerms = useServerFn(resetRolePermissions);
+  const fetchAreas = useServerFn(listFeatureAreas);
 
   const permsQuery = useQuery({
     queryKey: ["admin", "permissions"],
     queryFn: () => fetchPerms(),
   });
+
+  const areasQuery = useQuery({
+    queryKey: ["admin", "feature-areas"],
+    queryFn: () => fetchAreas(),
+  });
+
+  const featureAreas = (areasQuery.data ?? []).filter((a) => a.active);
 
   const matrix: Matrix = { admin: {}, staff: {} };
   for (const row of permsQuery.data ?? []) {
@@ -133,13 +141,21 @@ function PermissionsPage() {
         </p>
       )}
 
-      {permsQuery.isLoading ? (
+      {permsQuery.isLoading || areasQuery.isLoading ? (
         <div className="flex items-center gap-2 rounded-3xl border border-border bg-card/60 p-6 text-sm text-muted-foreground">
           <Loader2 className="size-4 animate-spin" aria-hidden /> Loading permissions…
         </div>
-      ) : permsQuery.error ? (
+      ) : permsQuery.error || areasQuery.error ? (
         <p className="rounded-3xl border border-destructive/40 bg-card/60 p-6 text-sm text-destructive">
           {permsQuery.error instanceof Error ? permsQuery.error.message : "Could not load permissions."}
+        </p>
+      ) : featureAreas.length === 0 ? (
+        <p className="rounded-3xl border border-border bg-card/60 p-6 text-sm text-muted-foreground">
+          No active feature areas yet. Add some under{" "}
+          <Link to="/admin/features" className="text-gold underline">
+            Feature areas
+          </Link>
+          .
         </p>
       ) : (
         <div className="overflow-x-auto rounded-3xl border border-border bg-card/60">
@@ -182,7 +198,7 @@ function PermissionsPage() {
               </tr>
             </thead>
             <tbody>
-              {FEATURE_AREAS.map((feature) => (
+              {featureAreas.map((feature) => (
                 <tr key={feature.key} className="border-b border-border/60 last:border-0">
                   <th scope="row" className="px-5 py-4 text-left align-middle">
                     <span className="block font-semibold text-foreground">{feature.label}</span>
