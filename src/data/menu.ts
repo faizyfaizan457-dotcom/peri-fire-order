@@ -12,6 +12,123 @@ export const IMAGES = {
   shakes: catShakes,
 };
 
+/* ------------------------------------------------- per-dish photography */
+
+import imgChickenQuarter from "@/assets/food/chicken-quarter.jpg";
+import imgChickenHalf from "@/assets/food/chicken-half.jpg";
+import imgChickenWhole from "@/assets/food/chicken-whole.jpg";
+import imgWings from "@/assets/food/wings.jpg";
+import imgChickenStrips from "@/assets/food/chicken-strips.jpg";
+import imgPeriBreast from "@/assets/food/peri-breast.jpg";
+import imgPeriBreastDouble from "@/assets/food/peri-breast-double.jpg";
+import imgFriesPlainLoaded from "@/assets/food/fries-plain-loaded.jpg";
+import imgFriesChickenLoaded from "@/assets/food/fries-chicken-loaded.jpg";
+import imgFriesBeefLoaded from "@/assets/food/fries-beef-loaded.jpg";
+import imgBurgerClassic from "@/assets/food/burger-classic.jpg";
+import imgBurgerCheese from "@/assets/food/burger-cheese.jpg";
+import imgBurgerBbq from "@/assets/food/burger-bbq.jpg";
+import imgBurgerSmokey from "@/assets/food/burger-smokey.jpg";
+import imgBurgerChipotle from "@/assets/food/burger-chipotle-cheese.jpg";
+import imgBurgerCreamCheese from "@/assets/food/burger-cream-cheese.jpg";
+import imgBurgerPineapple from "@/assets/food/burger-pineapple.jpg";
+import imgBurgerQuayside from "@/assets/food/burger-quayside-special.jpg";
+import imgLambClassic from "@/assets/food/lamb-classic.jpg";
+import imgLambGuaca from "@/assets/food/lamb-guaca.jpg";
+import imgVeggieBean from "@/assets/food/veggie-bean.jpg";
+import imgShamiBurger from "@/assets/food/shami-burger.jpg";
+import imgLambChops from "@/assets/food/lamb-chops.jpg";
+import imgLambDonerChips from "@/assets/food/lamb-doner-chips.jpg";
+import imgLambDonerNan from "@/assets/food/lamb-doner-nan.jpg";
+import imgChickenShish from "@/assets/food/chicken-shish.jpg";
+import imgSideFries from "@/assets/food/side-fries.jpg";
+import imgSideOnionRings from "@/assets/food/side-onion-rings.jpg";
+import imgSideFieryRice from "@/assets/food/side-fiery-rice.jpg";
+import imgSideColeslaw from "@/assets/food/side-coleslaw.jpg";
+import imgSideWedges from "@/assets/food/side-wedges.jpg";
+import imgSideCorn from "@/assets/food/side-corn.jpg";
+import imgSideEggRice from "@/assets/food/side-egg-rice.jpg";
+import imgSideMushroomRice from "@/assets/food/side-mushroom-rice.jpg";
+import imgSideCheesyChips from "@/assets/food/side-cheesy-chips.jpg";
+import imgSideNuggets from "@/assets/food/side-nuggets.jpg";
+import imgSidePopcorn from "@/assets/food/side-popcorn-chicken.jpg";
+import imgSidePeriSalt from "@/assets/food/side-peri-salt.jpg";
+import imgSideDips from "@/assets/food/side-dips.jpg";
+import imgSidePitta from "@/assets/food/side-pitta.jpg";
+import imgSideNan from "@/assets/food/side-nan.jpg";
+import imgSideMozzarella from "@/assets/food/side-mozzarella-sticks.jpg";
+import imgSideChilliNuggets from "@/assets/food/side-chilli-nuggets.jpg";
+import imgSideSweetPotato from "@/assets/food/side-sweet-potato-fries.jpg";
+import imgKidsChickenSteak from "@/assets/food/kids-chicken-steak.jpg";
+import imgKidsNuggets from "@/assets/food/kids-nuggets.jpg";
+import imgKidsPopcorn from "@/assets/food/kids-popcorn.jpg";
+import imgDrinkCan from "@/assets/food/drink-can.jpg";
+import imgDrinkBottle from "@/assets/food/drink-bottle.jpg";
+import imgMilkshake from "@/assets/food/milkshake.jpg";
+import imgSpecialShake from "@/assets/food/special-shake.jpg";
+import imgFudgeCake from "@/assets/food/fudge-cake.jpg";
+import imgCheesecake from "@/assets/food/cheesecake.jpg";
+import imgApplePie from "@/assets/food/apple-pie.jpg";
+import imgIceCream from "@/assets/food/ice-cream-tub.jpg";
+
+/** One unique photo per dish, keyed by product id. */
+export const PRODUCT_IMAGES: Record<string, string> = {
+  "quarter-chicken": imgChickenQuarter,
+  "half-chicken": imgChickenHalf,
+  "whole-chicken": imgChickenWhole,
+  wings: imgWings,
+  "chicken-strips": imgChickenStrips,
+  "peri-breast": imgPeriBreast,
+  "double-peri-breast": imgPeriBreastDouble,
+  "plain-loaded-fries": imgFriesPlainLoaded,
+  "chicken-loaded-fries": imgFriesChickenLoaded,
+  "beef-loaded-fries": imgFriesBeefLoaded,
+  "burger-classic": imgBurgerClassic,
+  "burger-cheese": imgBurgerCheese,
+  "burger-bbq": imgBurgerBbq,
+  "burger-smokey": imgBurgerSmokey,
+  "burger-chipotle-cheese": imgBurgerChipotle,
+  "burger-cream-cheese": imgBurgerCreamCheese,
+  "burger-pineapple-passion": imgBurgerPineapple,
+  "burger-quayside-special": imgBurgerQuayside,
+  "classic-lamb": imgLambClassic,
+  "guaca-lamb": imgLambGuaca,
+  "veggie-bean": imgVeggieBean,
+  "shami-burger": imgShamiBurger,
+  "lamb-chops": imgLambChops,
+  "lamb-doner-chips": imgLambDonerChips,
+  "lamb-doner-nan": imgLambDonerNan,
+  "chicken-shish": imgChickenShish,
+  fries: imgSideFries,
+  "onion-rings": imgSideOnionRings,
+  "fiery-rice": imgSideFieryRice,
+  coleslaw: imgSideColeslaw,
+  wedges: imgSideWedges,
+  corn: imgSideCorn,
+  "egg-peri-rice": imgSideEggRice,
+  "mushroom-peri-rice": imgSideMushroomRice,
+  "cheesy-chips": imgSideCheesyChips,
+  nuggets: imgSideNuggets,
+  "popcorn-chicken": imgSidePopcorn,
+  "peri-salt": imgSidePeriSalt,
+  dips: imgSideDips,
+  "toasted-pitta": imgSidePitta,
+  "nan-bread": imgSideNan,
+  "mozzarella-sticks": imgSideMozzarella,
+  "chilli-nuggets": imgSideChilliNuggets,
+  "sweet-potato-fries": imgSideSweetPotato,
+  "kids-chicken-steak": imgKidsChickenSteak,
+  "kids-nuggets": imgKidsNuggets,
+  "kids-popcorn": imgKidsPopcorn,
+  can: imgDrinkCan,
+  "bottle-1-5": imgDrinkBottle,
+  milkshake: imgMilkshake,
+  "special-shake": imgSpecialShake,
+  "fudge-cake": imgFudgeCake,
+  cheesecake: imgCheesecake,
+  "apple-pie": imgApplePie,
+  "haagen-dazs": imgIceCream,
+};
+
 /** A selectable size / portion of a product. */
 export interface ProductSize {
   label: string;
