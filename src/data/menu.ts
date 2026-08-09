@@ -580,6 +580,12 @@ export const PRODUCTS: Product[] = [
   { id: "haagen-dazs", name: "Haagen-Dazs", categoryId: "shakes-desserts", sizes: one(6.49) },
 ];
 
+/* Attach the unique per-dish photo to every product that has one. */
+for (const p of PRODUCTS) {
+  const img = PRODUCT_IMAGES[p.id];
+  if (img) p.image = img;
+}
+
 export function productById(id: string) {
   return PRODUCTS.find((p) => p.id === id);
 }
